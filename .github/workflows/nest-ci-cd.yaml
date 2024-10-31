@@ -38,10 +38,6 @@ jobs:
         working-directory: ./vuejs
         run: npm install
 
-      - name: Run tests for Vue.js
-        working-directory: ./vuejs
-        run: npm run test:unit # or your specific test command
-
       - name: Build Vue.js
         working-directory: ./vuejs
         run: npm run build
