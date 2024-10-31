@@ -1,0 +1,47 @@
+name: CI/CD for NestJS Backend and Vue.js Frontend
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22] # Specify the Node.js versions you want to test against
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies for NestJS
+        working-directory: ./nestjs
+        run: npm install
+
+      - name: Run tests for NestJS
+        working-directory: ./nestjs
+        run: npm test -- --watch=false
+
+      - name: Install dependencies for Vue.js
+        working-directory: ./vuejs
+        run: npm install
+
+      - name: Build Vue.js
+        working-directory: ./vuejs
+        run: npm run build
+
+      - name: Build NestJS
+        working-directory: ./nestjs
+        run: npm run build # Adjust if you have a specific build command
