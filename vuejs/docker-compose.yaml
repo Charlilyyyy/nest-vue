@@ -1,0 +1,29 @@
+services:
+  vue-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    command: npm run serve
+
+  vue-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=production
+
+
+# For development (hot reload)
+# docker-compose up vue-dev
+
+# For production
+# docker-compose up vue-prod
